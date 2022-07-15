@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
-* Студент: [Дмитрий Щеклеин](https://up.htmlacademy.ru/javascript/26/user/160701).
-* Наставник: `Неизвестно`.
+- Студент: [Дмитрий Щеклеин](https://up.htmlacademy.ru/javascript/26/user/160701).
+- Наставник: [Артем Мошкин](https://htmlacademy.ru/profile/id2088751).
 
 ---
 
