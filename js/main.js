@@ -1,6 +1,6 @@
 const getRandomInteger = (min, max) => {
-  const minIsPositive = Math.sign(min) === 1 || Math.sign(min) === 0;
-  const maxIsPositive = Math.sign(max) === 1 || Math.sign(max) === 0;
+  const minIsPositive = min >= 0;
+  const maxIsPositive = max >= 0;
 
   if (!(minIsPositive && maxIsPositive)) {
     throw new Error('Диапазон может быть только положительный, включая ноль');
@@ -13,9 +13,9 @@ const getRandomInteger = (min, max) => {
 };
 getRandomInteger(0, 7);
 
-const getRandomFloat = (min, max, fixNumberSigns) => {
-  const minIsPositive = Math.sign(min) === 1 || Math.sign(min) === 0;
-  const maxIsPositive = Math.sign(max) === 1 || Math.sign(max) === 0;
+const getRandomFloat = (min, max, fixNumberSigns = 2) => {
+  const minIsPositive = min >= 0;
+  const maxIsPositive = max >= 0;
 
   if (!(minIsPositive && maxIsPositive)) {
     throw new Error('Диапазон может быть только положительный, включая ноль');
