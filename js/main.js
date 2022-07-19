@@ -148,7 +148,12 @@ Random.int(0, 10);
 class ArrayEnhanced extends Array {
   constructor(...args) {
     super(...args);
-    this.array = [...args];
+    this.array = args;
+  }
+
+  // встроенные методы массива будут использовать этот метод как конструктор
+  static get [Symbol.species]() {
+    return Array;
   }
 
   shuffle() {
@@ -170,7 +175,7 @@ class ArrayEnhanced extends Array {
     return this.shuffle(newArray).slice(0, getRandomInteger(1, newArray.length - 1));
   }
 }
-const a = new ArrayEnhanced(1, 2, 3);
+const a = new ArrayEnhanced(1, 2, 3, 'str', []);
 a.shuffle();
 a.randomLength();
 // console.log(a instanceof ArrayEnhanced);
@@ -178,6 +183,7 @@ a.randomLength();
 // a.map((e) => e); // [1, 2, 3]
 a.push('foo');
 a.push(777);
-// console.log(a.shuffle());
-// console.log(a.randomLength());
+console.log(a.shuffle());
+console.log(a.randomLength());
+console.log(a.map((e) => e)); // [1, 2, 3]);
 // console.log(a);
