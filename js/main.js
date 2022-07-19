@@ -104,5 +104,80 @@ const generateOffer = (index) => {
   };
 };
 
-const generateData = (offersLength) => Array.from({ length: offersLength }).map((el, i) => generateOffer(i));
+const generateData = (offersLength) =>
+  Array.from({ length: offersLength }).map((el, i) => generateOffer(i));
 generateData(OFFERS_LENGTH);
+
+class Random {
+  static int(min, max) {
+    const minIsPositive = min >= 0;
+    const maxIsPositive = max >= 0;
+
+    if (!(minIsPositive && maxIsPositive)) {
+      throw new Error('Диапазон может быть только положительный, включая ноль');
+    }
+    if (min >= max || min === max) {
+      throw new Error('Значение «до» меньшее, чем значение «от», или равное ему');
+    }
+
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  static float(min, max, fixNumberSigns = 2) {
+    const minIsPositive = min >= 0;
+    const maxIsPositive = max >= 0;
+
+    if (!(minIsPositive && maxIsPositive)) {
+      throw new Error('Диапазон может быть только положительный, включая ноль');
+    }
+    if (min >= max || min === max) {
+      throw new Error('Значение «до» меньшее, чем значение «от», или равное ему');
+    }
+    return +(Math.random() * (max - min) + min).toFixed(fixNumberSigns);
+  }
+
+  static itemFromArray(array) {
+    return array[Random.int(0, array.length)];
+  }
+}
+Random.int(0, 10);
+// console.log(Random.int(5, 10));
+// console.log(Random.float(1.1, 1.5));
+// console.log(Random.itemFromArray(['test', 'test2', 'test3', 1, 2, 3]));
+
+class ArrayEnhanced extends Array {
+  constructor(...args) {
+    super(...args);
+    this.array = [...args];
+  }
+
+  shuffle() {
+    const newArr = this.array;
+
+    for (let i = newArr.length - 1; i > 0; i--) {
+      const num = Math.floor(Math.random() * (i + 1));
+      const buffer = newArr[num];
+      newArr[num] = newArr[i];
+      newArr[i] = buffer;
+    }
+
+    return newArr;
+  }
+
+  randomLength() {
+    const newArray = this.array;
+
+    return this.shuffle(newArray).slice(0, getRandomInteger(1, newArray.length - 1));
+  }
+}
+const a = new ArrayEnhanced(1, 2, 3);
+a.shuffle();
+a.randomLength();
+// console.log(a instanceof ArrayEnhanced);
+// console.log(a instanceof Array);
+// a.map((e) => e); // [1, 2, 3]
+a.push('foo');
+a.push(777);
+// console.log(a.shuffle());
+// console.log(a.randomLength());
+// console.log(a);
