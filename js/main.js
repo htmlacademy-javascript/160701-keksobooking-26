@@ -72,16 +72,13 @@ const getArrayRandomLength = function (array) {
 
   return mixArray(newArray).slice(0, getRandomInteger(1, newArray.length - 1));
 };
-const generateOffer = (index) => {
+const generateOffer = () => {
   const locationLat = getRandomFloat(35.65, 35.7, 5);
   const locationLng = getRandomFloat(139.7, 139.8, 5);
-  const fileNameIndex = index + 1;
 
   return {
     author: {
-      avatar: `img/avatars/user${
-        fileNameIndex < 10 ? `0${fileNameIndex}` : fileNameIndex
-      }.png`,
+      avatar: `img/avatars/user${String(i).padStart(2, 0)}.png`,
     },
     offer: {
       title: getRandomArrayItem(OFFER_TITLE),
