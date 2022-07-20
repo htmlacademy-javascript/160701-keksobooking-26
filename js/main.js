@@ -72,7 +72,7 @@ const getArrayRandomLength = function (array) {
 
   return mixArray(newArray).slice(0, getRandomInteger(1, newArray.length - 1));
 };
-const generateOffer = () => {
+const generateOffer = (i) => {
   const locationLat = getRandomFloat(35.65, 35.7, 5);
   const locationLng = getRandomFloat(139.7, 139.8, 5);
 
@@ -134,7 +134,7 @@ class Random {
   }
 
   static itemFromArray(array) {
-    return array[Random.int(0, array.length)];
+    return array[Random.int(0, array.length - 1)];
   }
 }
 Random.int(0, 10);
@@ -143,18 +143,14 @@ Random.int(0, 10);
 // console.log(Random.itemFromArray(['test', 'test2', 'test3', 1, 2, 3]));
 
 class ArrayEnhanced extends Array {
-  constructor(...args) {
-    super(...args);
-    this.array = args;
-  }
-
+  array = this;
   // встроенные методы массива будут использовать этот метод как конструктор
   static get [Symbol.species]() {
     return Array;
   }
 
   shuffle() {
-    const newArr = this.array;
+    const newArr = [...this.array];
 
     for (let i = newArr.length - 1; i > 0; i--) {
       const num = Math.floor(Math.random() * (i + 1));
@@ -167,12 +163,12 @@ class ArrayEnhanced extends Array {
   }
 
   randomLength() {
-    const newArray = this.array;
+    const newArray = [...this.array];
 
     return this.shuffle(newArray).slice(0, getRandomInteger(1, newArray.length - 1));
   }
 }
-const a = new ArrayEnhanced(1, 2, 3, 'str', []);
+const a = new ArrayEnhanced(1, 2, 3, 'str', 'bar');
 a.shuffle();
 a.randomLength();
 // console.log(a instanceof ArrayEnhanced);
@@ -180,6 +176,7 @@ a.randomLength();
 // a.map((e) => e); // [1, 2, 3]
 a.push('foo');
 a.push(777);
+console.log(a);
 console.log(a.shuffle());
 console.log(a.randomLength());
 console.log(a.map((e) => e)); // [1, 2, 3]);
