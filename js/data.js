@@ -24,7 +24,13 @@ const OFFER_PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
-
+const OfferTypes = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
+};
 export {
   OFFERS_LENGTH,
   OFFER_TITLE,
@@ -32,4 +38,5 @@ export {
   OFFER_TIMES,
   OFFER_FEATURES,
   OFFER_PHOTOS,
+  OfferTypes,
 };
