@@ -1,7 +1,7 @@
 import { Random, ArrayEnhanced } from './util.js';
 import {
   OFFERS_LENGTH,
-  OFFER_TITLE,
+  OFFER_TITLES,
   OFFER_TYPES,
   OFFER_TIMES,
   OFFER_FEATURES,
@@ -18,7 +18,7 @@ const generateOffer = (i) => {
       avatar: `img/avatars/user${String(i).padStart(2, 0)}.png`,
     },
     offer: {
-      title: Random.itemFromArray(OFFER_TITLE),
+      title: Random.itemFromArray(OFFER_TITLES),
       address: `${locationLat}, ${locationLng}`,
       price: Random.int(1, 10000),
       type: Random.itemFromArray(OFFER_TYPES),

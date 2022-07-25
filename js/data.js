@@ -1,5 +1,5 @@
 const OFFERS_LENGTH = 10;
-const OFFER_TITLE = [
+const OFFER_TITLES = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
   'Огромный прекрасный дворец',
@@ -31,12 +31,35 @@ const OfferTypes = {
   palace: 'Дворец',
   hotel: 'Отель',
 };
+const OfferTypePrices = {
+  bungalo: {
+    name: 'Бунгало',
+    price: '0',
+  },
+  flat: {
+    name: 'Квартира',
+    price: '1000',
+  },
+  hotel: {
+    name: 'Отель',
+    price: '3000',
+  },
+  house: {
+    name: 'Дом',
+    price: '5000',
+  },
+  palace: {
+    name: 'Дворец',
+    price: '10000',
+  },
+};
 export {
   OFFERS_LENGTH,
-  OFFER_TITLE,
+  OFFER_TITLES,
   OFFER_TYPES,
   OFFER_TIMES,
   OFFER_FEATURES,
   OFFER_PHOTOS,
   OfferTypes,
+  OfferTypePrices,
 };
