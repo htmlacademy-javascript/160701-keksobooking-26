@@ -1,5 +1,6 @@
 import { generateData, generateCard } from './generate.js';
 import { OFFERS_LENGTH } from './data.js';
+import './form-validation.js';
 import './form.js';
 
 const container = document.querySelector('#map-canvas');
