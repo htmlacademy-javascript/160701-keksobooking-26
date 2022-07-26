@@ -20,5 +20,4 @@ class FormState {
   }
 }
 
-const formElements = document.querySelectorAll('.ad-form, .map__filters');
-formElements.forEach((form) => new FormState(form).disabled());
+export default FormState;

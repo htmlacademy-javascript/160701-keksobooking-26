@@ -19,6 +19,8 @@ pristine.addValidator(
   adForm.querySelector('#title'),
   validateTitle,
   'От 30 до 100 символов',
+  2,
+  true,
 );
 const priceInput = document.querySelector('#price');
 const validatePriceMax = (value) => Number(value) <= 100000;
