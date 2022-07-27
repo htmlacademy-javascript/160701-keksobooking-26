@@ -10,7 +10,7 @@ class Random {
       throw new Error('Значение «до» меньшее, чем значение «от», или равное ему');
     }
 
-    return Math.floor(Math.random() * (max - min) + min);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   static float(min, max, fixNumberSigns = 2) {
@@ -23,7 +23,7 @@ class Random {
     if (min >= max || min === max) {
       throw new Error('Значение «до» меньшее, чем значение «от», или равное ему');
     }
-    return +(Math.random() * (max - min) + min).toFixed(fixNumberSigns);
+    return Number(Math.random() * (max - min) + min).toFixed(fixNumberSigns);
   }
 
   static itemFromArray(array) {
