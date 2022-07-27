@@ -25,6 +25,10 @@ class FormState {
       this.sliderElement.removeAttribute('disabled');
     }
   }
+
+  reset() {
+    this.form.reset();
+  }
 }
 
 export default FormState;

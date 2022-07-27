@@ -1,5 +1,5 @@
 import FormState from './form.js';
-import { generateCard, generateData } from './generate.js';
+import { generateCard } from './generate.js';
 import { OFFERS_LENGTH } from './data.js';
 import { getPoints } from './backend.js';
 
@@ -48,17 +48,14 @@ const createMarker = (point) => {
 map.on('load', async () => {
   adForm.active();
 
-  try {
-    const points = await getPoints();
+  const points = await getPoints();
 
-    if (points.length) {
-      points.filter((el, i) => i <= OFFERS_LENGTH).forEach(createMarker);
-      filtersForm.active();
-    }
-  } catch (e) {
-    console.error(e);
+  if (points.length) {
+    points.filter((el, i) => i <= OFFERS_LENGTH).forEach(createMarker);
+    filtersForm.active();
   }
 });
+
 map.setView(
   {
     lat: TokioCoordinate.lat,

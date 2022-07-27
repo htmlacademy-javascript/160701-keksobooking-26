@@ -1,6 +1,9 @@
+import { sendForm } from './backend.js';
 import { OfferTypePrices } from './data.js';
+import FormState from './form.js';
 
 const adForm = document.querySelector('.ad-form');
+const adFormResetBtn = adForm.querySelector('.ad-form__reset');
 
 const pristine = new Pristine(
   adForm,
@@ -83,9 +86,11 @@ pristine.addValidator(
   ...validatorParams,
 );
 adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
   if (!pristine.validate()) {
-    evt.preventDefault();
+    return;
   }
+  sendForm(adForm);
 });
 const timeinSelect = document.querySelector('#timein');
 const timeoutSelect = document.querySelector('#timeout');
@@ -114,3 +119,8 @@ const formTypeHandler = ({ target }) => {
 };
 formTypeSelect.addEventListener('change', formTypeHandler);
 formTypeSelect.dispatchEvent(new Event('change'));
+
+adFormResetBtn.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  new FormState(adForm).reset();
+});
