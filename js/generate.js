@@ -97,14 +97,14 @@ const generateCard = ({ author, offer }) => {
   }
   const offerPhotosContainer = card.querySelector('.popup__photos');
 
-  const offerPhotoElement = offerPhotosContainer
-    .querySelector('.popup__photo')
-    .cloneNode();
-  offerPhotosContainer.querySelector('.popup__photo').remove();
+  const offerPhotoElement = offerPhotosContainer.querySelector('.popup__photo');
+  offerPhotosContainer.innerHTML = '';
 
   photos.forEach((photoLink) => {
-    offerPhotoElement.setAttribute('src', photoLink);
-    offerPhotosContainer.appendChild(offerPhotoElement);
+    const photo = offerPhotoElement.cloneNode(true);
+
+    photo.setAttribute('src', photoLink);
+    offerPhotosContainer.appendChild(photo);
   });
   const offerAvatarElement = card.querySelector('.popup__avatar');
   offerAvatarElement.setAttribute('src', author.avatar);

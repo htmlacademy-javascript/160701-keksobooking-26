@@ -406,7 +406,9 @@ fieldset {
 .ad-form__element--time select:first-of-type {
   margin-right: 14px;
 }
-
+.ad-form__error {
+  color: red;
+}
 .ad-form__slider.noUi-target:not(#fake-id) {
   width: calc(100% - 20px);
   height: 5px;
