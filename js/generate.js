@@ -82,7 +82,7 @@ const generateCard = ({ author, offer }) => {
   const offerFeaturesListElement =
     offerFeaturesElement.querySelectorAll('.popup__feature');
 
-  if (!features.length) {
+  if (!features) {
     offerFeaturesElement.style.display = 'none';
   } else {
     offerFeaturesListElement.forEach((featureElement) => {
@@ -104,16 +104,23 @@ const generateCard = ({ author, offer }) => {
 
   const offerPhotoElement = offerPhotosContainer.querySelector('.popup__photo');
   offerPhotosContainer.innerHTML = '';
+  if (photos) {
+    photos.forEach((photoLink) => {
+      const photo = offerPhotoElement.cloneNode(true);
 
-  photos.forEach((photoLink) => {
-    const photo = offerPhotoElement.cloneNode(true);
-
-    photo.setAttribute('src', photoLink);
-    offerPhotosContainer.appendChild(photo);
-  });
+      photo.setAttribute('src', photoLink);
+      offerPhotosContainer.appendChild(photo);
+    });
+  }
   const offerAvatarElement = card.querySelector('.popup__avatar');
   offerAvatarElement.setAttribute('src', author.avatar);
   return card;
 };
+const generateMapError = (message) => {
+  const errrMsg = document.createElement('div');
+  errrMsg.classList.add('map__error');
+  errrMsg.textContent = `${message}`;
 
-export { generateData, generateCard };
+  return errrMsg;
+};
+export { generateData, generateCard, generateMapError };
