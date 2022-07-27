@@ -81,14 +81,19 @@ const generateCard = ({ author, offer }) => {
   const offerFeaturesElement = card.querySelector('.popup__features');
   const offerFeaturesListElement =
     offerFeaturesElement.querySelectorAll('.popup__feature');
-  offerFeaturesListElement.forEach((featureElement) => {
-    const isNecessary = features.some((featureName) =>
-      featureElement.classList.contains(`popup__feature--${featureName}`),
-    );
-    if (!isNecessary) {
-      featureElement.remove();
-    }
-  });
+
+  if (!features.length) {
+    offerFeaturesElement.style.display = 'none';
+  } else {
+    offerFeaturesListElement.forEach((featureElement) => {
+      const isNecessary = features.some((featureName) =>
+        featureElement.classList.contains(`popup__feature--${featureName}`),
+      );
+      if (!isNecessary) {
+        featureElement.remove();
+      }
+    });
+  }
 
   const offerDescriptionElement = card.querySelector('.popup__description');
   offerDescriptionElement.textContent = description;
@@ -97,14 +102,14 @@ const generateCard = ({ author, offer }) => {
   }
   const offerPhotosContainer = card.querySelector('.popup__photos');
 
-  const offerPhotoElement = offerPhotosContainer
-    .querySelector('.popup__photo')
-    .cloneNode();
-  offerPhotosContainer.querySelector('.popup__photo').remove();
+  const offerPhotoElement = offerPhotosContainer.querySelector('.popup__photo');
+  offerPhotosContainer.innerHTML = '';
 
   photos.forEach((photoLink) => {
-    offerPhotoElement.setAttribute('src', photoLink);
-    offerPhotosContainer.appendChild(offerPhotoElement);
+    const photo = offerPhotoElement.cloneNode(true);
+
+    photo.setAttribute('src', photoLink);
+    offerPhotosContainer.appendChild(photo);
   });
   const offerAvatarElement = card.querySelector('.popup__avatar');
   offerAvatarElement.setAttribute('src', author.avatar);

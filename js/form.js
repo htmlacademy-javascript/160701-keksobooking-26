@@ -3,6 +3,7 @@ class FormState {
     this.form = formElement;
     this.disabledClassName = `${this.form.classList[0]}--disabled`;
     this.formElements = Array.from(this.form.elements);
+    this.sliderElement = this.form.querySelector('.ad-form__slider');
   }
 
   disabled() {
@@ -10,6 +11,9 @@ class FormState {
     this.formElements.forEach((elem) => {
       elem.setAttribute('disabled', 'disabled');
     });
+    if (this.sliderElement) {
+      this.sliderElement.setAttribute('disabled', true);
+    }
   }
 
   active() {
@@ -17,8 +21,10 @@ class FormState {
     this.formElements.forEach((elem) => {
       elem.removeAttribute('disabled');
     });
+    if (this.sliderElement) {
+      this.sliderElement.removeAttribute('disabled');
+    }
   }
 }
 
-const formElements = document.querySelectorAll('.ad-form, .map__filters');
-formElements.forEach((form) => new FormState(form).disabled());
+export default FormState;
