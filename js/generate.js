@@ -81,14 +81,19 @@ const generateCard = ({ author, offer }) => {
   const offerFeaturesElement = card.querySelector('.popup__features');
   const offerFeaturesListElement =
     offerFeaturesElement.querySelectorAll('.popup__feature');
-  offerFeaturesListElement.forEach((featureElement) => {
-    const isNecessary = features.some((featureName) =>
-      featureElement.classList.contains(`popup__feature--${featureName}`),
-    );
-    if (!isNecessary) {
-      featureElement.remove();
-    }
-  });
+
+  if (!features.length) {
+    offerFeaturesElement.style.display = 'none';
+  } else {
+    offerFeaturesListElement.forEach((featureElement) => {
+      const isNecessary = features.some((featureName) =>
+        featureElement.classList.contains(`popup__feature--${featureName}`),
+      );
+      if (!isNecessary) {
+        featureElement.remove();
+      }
+    });
+  }
 
   const offerDescriptionElement = card.querySelector('.popup__description');
   offerDescriptionElement.textContent = description;
