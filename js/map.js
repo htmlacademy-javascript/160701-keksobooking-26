@@ -1,9 +1,13 @@
 import FormState from './form.js';
 import { generateCard, generateData } from './generate.js';
 import { OFFERS_LENGTH } from './data.js';
+import { getPoints } from './backend.js';
 
-const formElements = document.querySelectorAll('.ad-form, .map__filters');
-formElements.forEach((form) => new FormState(form).disabled());
+const adForm = new FormState(document.querySelector('.ad-form'));
+adForm.disabled();
+const filtersForm = new FormState(document.querySelector('.map__filters'));
+filtersForm.disabled();
+
 const TokioCoordinate = {
   lat: 35.6895,
   lng: 139.692,
@@ -11,22 +15,7 @@ const TokioCoordinate = {
 const addressInput = document.querySelector('#address');
 addressInput.value = Object.values(TokioCoordinate).join();
 
-const map = L.map('map-canvas')
-  .on('load', () => {
-    formElements.forEach((form) => new FormState(form).active());
-  })
-  .setView(
-    {
-      lat: TokioCoordinate.lat,
-      lng: TokioCoordinate.lng,
-    },
-    10,
-  );
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
-
+const map = L.map('map-canvas');
 const PinIcons = {
   MAIN: L.icon({
     iconUrl: './img/main-pin.svg',
@@ -56,9 +45,31 @@ const createMarker = (point) => {
 
   marker.addTo(markerGroup).bindPopup(generateCard(point));
 };
-const points = generateData(OFFERS_LENGTH);
-points.forEach(createMarker);
+map.on('load', async () => {
+  adForm.active();
 
+  try {
+    const points = await getPoints();
+
+    if (points.length) {
+      points.filter((el, i) => i <= OFFERS_LENGTH).forEach(createMarker);
+      filtersForm.active();
+    }
+  } catch (e) {
+    console.error(e);
+  }
+});
+map.setView(
+  {
+    lat: TokioCoordinate.lat,
+    lng: TokioCoordinate.lng,
+  },
+  10,
+);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
 const mainMarker = L.marker(
   {
     lat: TokioCoordinate.lat,
