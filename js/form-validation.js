@@ -1,6 +1,7 @@
 import { OfferTypePrices } from './data.js';
 
 const adForm = document.querySelector('.ad-form');
+
 const pristine = new Pristine(
   adForm,
   {
@@ -13,21 +14,31 @@ const pristine = new Pristine(
   },
   false,
 );
-
+const validatorParams = [2, true];
 const validateTitle = (value) => value.length >= 30 && value.length <= 100;
 pristine.addValidator(
   adForm.querySelector('#title'),
   validateTitle,
   'От 30 до 100 символов',
-  2,
-  true,
+  ...validatorParams,
 );
 const priceInput = document.querySelector('#price');
 const validatePriceMax = (value) => Number(value) <= 100000;
 const validatePriceMin = (value) => Number(value) >= Number(priceInput.min);
-const getMinPriceErrorMessage = () => `Минимальное значение — ${priceInput.min}`;
-pristine.addValidator(priceInput, validatePriceMax, 'Максимальное значение — 100 000');
-pristine.addValidator(priceInput, validatePriceMin, getMinPriceErrorMessage);
+const getMinPriceErrorMessage = () =>
+  `Минимальное значение — ${priceInput.min}`;
+pristine.addValidator(
+  priceInput,
+  validatePriceMax,
+  'Максимальное значение — 100 000',
+  ...validatorParams,
+);
+pristine.addValidator(
+  priceInput,
+  validatePriceMin,
+  getMinPriceErrorMessage,
+  ...validatorParams,
+);
 
 const roomSelect = document.querySelector('#room_number');
 const capacitySelect = document.querySelector('#capacity');
@@ -59,8 +70,18 @@ const CapacityErrorMessageMap = {
   100: 'Не подходит для гостей',
 };
 const getCapacityErrorMessage = () => CapacityErrorMessageMap[roomSelect.value];
-pristine.addValidator(roomSelect, validateCapacity, getCapacityErrorMessage);
-pristine.addValidator(capacitySelect, validateCapacity, getCapacityErrorMessage);
+pristine.addValidator(
+  roomSelect,
+  validateCapacity,
+  getCapacityErrorMessage,
+  ...validatorParams,
+);
+pristine.addValidator(
+  capacitySelect,
+  validateCapacity,
+  getCapacityErrorMessage,
+  ...validatorParams,
+);
 adForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) {
     evt.preventDefault();
@@ -68,8 +89,8 @@ adForm.addEventListener('submit', (evt) => {
 });
 const timeinSelect = document.querySelector('#timein');
 const timeoutSelect = document.querySelector('#timeout');
-const syncTimeHandler = (evt) => {
-  const targetId = evt.target.id;
+const syncTimeHandler = ({ target }) => {
+  const targetId = target.id;
   const selectTarget = targetId === 'timein' ? timeinSelect : timeoutSelect;
   const selectCompare = targetId === 'timein' ? timeoutSelect : timeinSelect;
   selectCompare.value = selectTarget.value;
@@ -78,10 +99,8 @@ timeinSelect.addEventListener('change', syncTimeHandler);
 timeoutSelect.addEventListener('change', syncTimeHandler);
 
 const formTypeSelect = document.querySelector('#type');
-const formTypeHandler = (evt) => {
-  const targetOfferType = evt.target.value;
-  const offerType = OfferTypePrices;
-  const findedOfferType = offerType[targetOfferType];
+const formTypeHandler = ({ target }) => {
+  const findedOfferType = OfferTypePrices[target.value];
 
   if (findedOfferType) {
     const { price } = findedOfferType;
