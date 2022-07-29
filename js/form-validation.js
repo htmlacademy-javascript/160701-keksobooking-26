@@ -1,5 +1,5 @@
 import { sendForm } from './backend.js';
-import { OfferTypePrices } from './data.js';
+import { OfferTypePrices, Validation } from './data.js';
 import FormState from './form.js';
 
 const adForm = document.querySelector('.ad-form');
@@ -17,8 +17,17 @@ const pristine = new Pristine(
   },
   false,
 );
-const validatorParams = [2, true];
-const validateTitle = (value) => value.length >= 30 && value.length <= 100;
+const PristineParams = {
+  PRIORITY: 2,
+  HALT: true,
+};
+const validatorParams = [
+  PristineParams.PRIORITY_FUNCTION_VALUE,
+  PristineParams.HALT,
+];
+const validateTitle = (value) =>
+  value.length >= Validation.TITLE.MIN_TITLE_LENGTH &&
+  value.length <= Validation.TITLE.MAX_TITLE_LENGTH;
 pristine.addValidator(
   adForm.querySelector('#title'),
   validateTitle,
@@ -26,7 +35,7 @@ pristine.addValidator(
   ...validatorParams,
 );
 const priceInput = document.querySelector('#price');
-const validatePriceMax = (value) => Number(value) <= 100000;
+const validatePriceMax = (value) => Number(value) <= Validation.PRICE.MAX_PRICE;
 const validatePriceMin = (value) => Number(value) >= Number(priceInput.min);
 const getMinPriceErrorMessage = () =>
   `Минимальное значение — ${priceInput.min}`;
