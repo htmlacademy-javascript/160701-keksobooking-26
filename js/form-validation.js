@@ -1,9 +1,17 @@
 import { sendForm } from './backend.js';
 import { OfferTypePrices, Validation } from './data.js';
 import FormState from './form.js';
+import {
+  setDefaultCoordinate,
+  setDefaultView,
+  setMainMarkerDefault,
+  closePopup,
+} from './map.js';
+import { showPopup } from './popup.js';
 
 const adForm = document.querySelector('.ad-form');
 const adFormResetBtn = adForm.querySelector('.ad-form__reset');
+const filtersForm = document.querySelector('.map__filters');
 const priceInput = document.querySelector('#price');
 const roomSelect = document.querySelector('#room_number');
 const capacitySelect = document.querySelector('#capacity');
@@ -93,13 +101,29 @@ pristine.addValidator(
   getCapacityErrorMessage,
   ...validatorParams,
 );
-
-adForm.addEventListener('submit', (evt) => {
+const resetForm = () => {
+  new FormState(adForm).reset();
+  new FormState(filtersForm).reset();
+  setDefaultCoordinate();
+  setDefaultView();
+  setMainMarkerDefault();
+  closePopup();
+};
+adForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   if (!pristine.validate()) {
     return;
   }
-  sendForm(adForm);
+  try {
+    const response = await sendForm(adForm);
+    if (response instanceof Error) {
+      throw new Error(response.message);
+    }
+    showPopup('success');
+    resetForm();
+  } catch (error) {
+    showPopup('error');
+  }
 });
 
 const syncTimeHandler = ({ target }) => {
@@ -129,5 +153,5 @@ formTypeSelect.dispatchEvent(new Event('change'));
 
 adFormResetBtn.addEventListener('click', (evt) => {
   evt.preventDefault();
-  new FormState(adForm).reset();
+  resetForm();
 });
