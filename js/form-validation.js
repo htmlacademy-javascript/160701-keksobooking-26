@@ -4,7 +4,21 @@ import FormState from './form.js';
 
 const adForm = document.querySelector('.ad-form');
 const adFormResetBtn = adForm.querySelector('.ad-form__reset');
+const priceInput = document.querySelector('#price');
+const roomSelect = document.querySelector('#room_number');
+const capacitySelect = document.querySelector('#capacity');
+const timeinSelect = document.querySelector('#timein');
+const timeoutSelect = document.querySelector('#timeout');
+const formTypeSelect = document.querySelector('#type');
 
+const PristineParams = {
+  PRIORITY: 2,
+  HALT: true,
+};
+const validatorParams = [
+  PristineParams.PRIORITY_FUNCTION_VALUE,
+  PristineParams.HALT,
+];
 const pristine = new Pristine(
   adForm,
   {
@@ -17,14 +31,7 @@ const pristine = new Pristine(
   },
   false,
 );
-const PristineParams = {
-  PRIORITY: 2,
-  HALT: true,
-};
-const validatorParams = [
-  PristineParams.PRIORITY_FUNCTION_VALUE,
-  PristineParams.HALT,
-];
+
 const validateTitle = (value) =>
   value.length >= Validation.TITLE.MIN_TITLE_LENGTH &&
   value.length <= Validation.TITLE.MAX_TITLE_LENGTH;
@@ -34,7 +41,7 @@ pristine.addValidator(
   'От 30 до 100 символов',
   ...validatorParams,
 );
-const priceInput = document.querySelector('#price');
+
 const validatePriceMax = (value) => Number(value) <= Validation.PRICE.MAX_PRICE;
 const validatePriceMin = (value) => Number(value) >= Number(priceInput.min);
 const getMinPriceErrorMessage = () =>
@@ -52,8 +59,6 @@ pristine.addValidator(
   ...validatorParams,
 );
 
-const roomSelect = document.querySelector('#room_number');
-const capacitySelect = document.querySelector('#capacity');
 const RoomOptions = {
   1: [{ name: 'для 1 гостя', value: 1 }],
   2: [
@@ -83,17 +88,12 @@ const CapacityErrorMessageMap = {
 };
 const getCapacityErrorMessage = () => CapacityErrorMessageMap[roomSelect.value];
 pristine.addValidator(
-  roomSelect,
-  validateCapacity,
-  getCapacityErrorMessage,
-  ...validatorParams,
-);
-pristine.addValidator(
   capacitySelect,
   validateCapacity,
   getCapacityErrorMessage,
   ...validatorParams,
 );
+
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (!pristine.validate()) {
@@ -101,8 +101,7 @@ adForm.addEventListener('submit', (evt) => {
   }
   sendForm(adForm);
 });
-const timeinSelect = document.querySelector('#timein');
-const timeoutSelect = document.querySelector('#timeout');
+
 const syncTimeHandler = ({ target }) => {
   const targetId = target.id;
   const selectTarget = targetId === 'timein' ? timeinSelect : timeoutSelect;
@@ -112,7 +111,6 @@ const syncTimeHandler = ({ target }) => {
 timeinSelect.addEventListener('change', syncTimeHandler);
 timeoutSelect.addEventListener('change', syncTimeHandler);
 
-const formTypeSelect = document.querySelector('#type');
 const formTypeHandler = ({ target }) => {
   const findedOfferType = OfferTypePrices[target.value];
 
