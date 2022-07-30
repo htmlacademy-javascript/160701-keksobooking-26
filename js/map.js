@@ -2,6 +2,7 @@ import FormState from './form.js';
 import { generateCard } from './generate.js';
 import { OFFERS_LENGTH } from './data.js';
 import { getPoints } from './backend.js';
+import { filterOffers } from './filters.js';
 
 const adForm = new FormState(document.querySelector('.ad-form'));
 const filtersForm = new FormState(document.querySelector('.map__filters'));
@@ -47,14 +48,18 @@ const createMarker = (point) => {
   marker.addTo(markerGroup).bindPopup(generateCard(point));
 };
 const closePopup = () => map.closePopup();
+const renderPoints = (points) => {
+  points.filter((el, i) => i <= OFFERS_LENGTH).forEach(createMarker);
+};
 map.on('load', async () => {
   adForm.active();
 
   const points = await getPoints();
 
   if (points.length) {
-    points.filter((el, i) => i <= OFFERS_LENGTH).forEach(createMarker);
     filtersForm.active();
+    filterOffers(points);
+    renderPoints(points);
   }
 });
 const setDefaultView = () => {
@@ -102,4 +107,6 @@ export {
   setDefaultView,
   setMainMarkerDefault,
   closePopup,
+  renderPoints,
+  markerGroup,
 };
