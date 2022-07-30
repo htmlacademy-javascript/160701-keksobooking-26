@@ -25,10 +25,7 @@ const PristineParams = {
   PRIORITY: 2,
   HALT: true,
 };
-const validatorParams = [
-  PristineParams.PRIORITY_FUNCTION_VALUE,
-  PristineParams.HALT,
-];
+const validatorParams = [PristineParams.PRIORITY, PristineParams.HALT];
 const pristine = new Pristine(
   adForm,
   {
