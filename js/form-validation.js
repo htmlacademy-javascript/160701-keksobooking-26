@@ -95,12 +95,15 @@ const CapacityErrorMessageMap = {
   100: 'Не подходит для гостей',
 };
 const getCapacityErrorMessage = () => CapacityErrorMessageMap[roomSelect.value];
-pristine.addValidator(
-  capacitySelect,
-  validateCapacity,
-  getCapacityErrorMessage,
-  ...validatorParams,
-);
+[roomSelect, capacitySelect].forEach((elem) => {
+  pristine.addValidator(
+    elem,
+    validateCapacity,
+    getCapacityErrorMessage,
+    ...validatorParams,
+  );
+});
+
 const resetForm = () => {
   new FormState(adForm).reset();
   new FormState(filtersForm).reset();
