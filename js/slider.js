@@ -1,5 +1,5 @@
-const MIN_PRICE = 0;
-const MAX_PRICE = 100000;
+import { Validation } from './data.js';
+
 const sliderElement = document.querySelector('.ad-form__slider');
 const priceInput = document.querySelector('#price');
 const minPriceValue = Number(priceInput.min);
@@ -7,8 +7,8 @@ const typeSelect = document.querySelector('#type');
 
 noUiSlider.create(sliderElement, {
   range: {
-    min: MIN_PRICE,
-    max: MAX_PRICE,
+    min: Validation.PRICE.MIN_PRICE,
+    max: Validation.PRICE.MAX_PRICE,
   },
   start: minPriceValue,
   step: 1,

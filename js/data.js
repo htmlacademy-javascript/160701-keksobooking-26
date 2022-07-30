@@ -53,6 +53,17 @@ const OfferTypePrices = {
     price: '10000',
   },
 };
+const Validation = {
+  TITLE: {
+    MAX_TITLE_LENGTH: 100,
+    MIN_TITLE_LENGTH: 30,
+  },
+  PRICE: {
+    MIN_PRICE: 0,
+    MAX_PRICE: 100000,
+  },
+};
+
 export {
   OFFERS_LENGTH,
   OFFER_TITLES,
@@ -62,4 +73,5 @@ export {
   OFFER_PHOTOS,
   OfferTypes,
   OfferTypePrices,
+  Validation,
 };

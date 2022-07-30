@@ -59,6 +59,7 @@ const generateCard = ({ author, offer }) => {
   } = offer;
   const cardTemplate = document.querySelector('#card').content;
   const card = cardTemplate.cloneNode(true);
+  const cardWrap = document.createElement('div');
 
   const offerTitleElement = card.querySelector('.popup__title');
   offerTitleElement.textContent = title;
@@ -114,13 +115,15 @@ const generateCard = ({ author, offer }) => {
   }
   const offerAvatarElement = card.querySelector('.popup__avatar');
   offerAvatarElement.setAttribute('src', author.avatar);
-  return card;
+  cardWrap.appendChild(card);
+
+  return cardWrap;
 };
 const generateMapError = (message) => {
-  const errrMsg = document.createElement('div');
-  errrMsg.classList.add('map__error');
-  errrMsg.textContent = `${message}`;
+  const errorMessage = document.createElement('div');
+  errorMessage.classList.add('map__error');
+  errorMessage.textContent = `${message}`;
 
-  return errrMsg;
+  return errorMessage;
 };
 export { generateData, generateCard, generateMapError };

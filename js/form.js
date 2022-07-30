@@ -4,6 +4,9 @@ class FormState {
     this.disabledClassName = `${this.form.classList[0]}--disabled`;
     this.formElements = Array.from(this.form.elements);
     this.sliderElement = this.form.querySelector('.ad-form__slider');
+    this.defaultAvatar = document.querySelector('.ad-form-header__preview img');
+    this.houseImagePhoto = document.querySelector('.ad-form__photo');
+    this.defaultAvatarSrc = this.defaultAvatar.getAttribute('src');
   }
 
   disabled() {
@@ -28,6 +31,8 @@ class FormState {
 
   reset() {
     this.form.reset();
+    this.defaultAvatar.setAttribute('src', this.defaultAvatarSrc);
+    this.houseImagePhoto.style.backgroundImage = '';
   }
 }
 
