@@ -8,6 +8,10 @@ const getPoints = async () => {
 
   try {
     response = await fetch(URL_LOAD);
+
+    if (response.status !== 200) {
+      throw new Error(`${response.statusText} ${response.status}`);
+    }
     const points = await response.json();
 
     return points;
