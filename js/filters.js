@@ -70,7 +70,7 @@ const filterOffers = (offers) => {
         });
       }
     }
-    console.log(newArr);
+
     return newArr;
   };
 
