@@ -96,7 +96,7 @@ const filterOffers = (offers) => {
     renderPoints(sortData);
   };
 
-  mapFilters.addEventListener('change', debounce(onMapFiltersChange, 10));
+  mapFilters.addEventListener('change', debounce(onMapFiltersChange));
 };
 
 export { filterOffers };
