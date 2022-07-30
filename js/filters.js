@@ -60,12 +60,17 @@ const filterOffers = (offers) => {
           } else if (isFilter) {
             return !!offer.features && offer.features.includes(filterName);
           } else {
-            return offer[filterName] === Number(objConfig[key]);
+            const isHouseType = filterName === 'type';
+            const configValue = !isHouseType
+              ? Number(objConfig[key])
+              : objConfig[key];
+
+            return offer[filterName] === configValue;
           }
         });
       }
     }
-
+    console.log(newArr);
     return newArr;
   };
 
