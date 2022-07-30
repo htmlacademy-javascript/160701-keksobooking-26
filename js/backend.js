@@ -1,5 +1,4 @@
 import { generateMapError } from './generate.js';
-import { showPopup } from './popup.js';
 
 const URL_UPLOAD = 'https://26.javascript.pages.academy/keksobooking/';
 const URL_LOAD = 'https://26.javascript.pages.academy/keksobooking/data';
@@ -9,6 +8,10 @@ const getPoints = async () => {
 
   try {
     response = await fetch(URL_LOAD);
+
+    if (response.status !== 200) {
+      throw new Error(`${response.statusText} ${response.status}`);
+    }
     const points = await response.json();
 
     return points;
@@ -28,11 +31,14 @@ const sendForm = async (form) => {
       method: 'POST',
       body: new FormData(form),
     });
+
     if (response.status === 200) {
-      showPopup('success');
+      return response;
     }
+
+    throw new Error(`${response.statusText} ${response.status}`);
   } catch (error) {
-    showPopup('error');
+    return error;
   }
 };
 export { getPoints, sendForm };
