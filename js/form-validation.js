@@ -10,8 +10,10 @@ import {
 import { showPopup } from './popup.js';
 
 const adForm = document.querySelector('.ad-form');
+const adFormState = new FormState(adForm);
 const adFormResetBtn = adForm.querySelector('.ad-form__reset');
 const filtersForm = document.querySelector('.map__filters');
+const filtersFormState = new FormState(filtersForm);
 const priceInput = document.querySelector('#price');
 const roomSelect = document.querySelector('#room_number');
 const capacitySelect = document.querySelector('#capacity');
@@ -105,8 +107,8 @@ const getCapacityErrorMessage = () => CapacityErrorMessageMap[roomSelect.value];
 });
 
 const resetForm = () => {
-  new FormState(adForm).reset();
-  new FormState(filtersForm).reset();
+  adFormState.reset();
+  filtersFormState.reset();
   setDefaultCoordinate();
   setDefaultView();
   setMainMarkerDefault();
