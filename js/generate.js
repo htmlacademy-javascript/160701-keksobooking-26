@@ -117,10 +117,10 @@ const generateCard = ({ author, offer }) => {
   return card;
 };
 const generateMapError = (message) => {
-  const errrMsg = document.createElement('div');
-  errrMsg.classList.add('map__error');
-  errrMsg.textContent = `${message}`;
+  const errorMessage = document.createElement('div');
+  errorMessage.classList.add('map__error');
+  errorMessage.textContent = `${message}`;
 
-  return errrMsg;
+  return errorMessage;
 };
 export { generateData, generateCard, generateMapError };
