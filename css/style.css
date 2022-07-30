@@ -88,7 +88,19 @@ fieldset {
   height: 500px;
   background-color: #dddddd;
 }
-
+.map__error {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  z-index: 401;
+  background: #ff5635;
+  color: #fff;
+}
 
 /**
  * Фильтры объявления
@@ -406,7 +418,9 @@ fieldset {
 .ad-form__element--time select:first-of-type {
   margin-right: 14px;
 }
-
+.ad-form__error {
+  color: red;
+}
 .ad-form__slider.noUi-target:not(#fake-id) {
   width: calc(100% - 20px);
   height: 5px;
